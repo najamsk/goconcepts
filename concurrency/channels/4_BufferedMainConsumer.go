@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-//XXX:Bufferd Channel
+//XXX:Bufferd Channel, main producer and gor consumer
 
 func main() {
 	fmt.Println("main func invoked")

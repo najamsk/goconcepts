@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//XXX: Bufferd chan with producer and consumer gor along with exit chan
 func main() {
 	ch := make(chan int, 2)
 	exit := make(chan struct{})
