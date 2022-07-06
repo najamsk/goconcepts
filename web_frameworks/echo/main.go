@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -12,6 +13,8 @@ type User struct {
 }
 
 func main() {
+	i := 0
+	fmt.Println(i)
 	e := echo.New()
 	e.GET("/users/:id", getUser)
 
