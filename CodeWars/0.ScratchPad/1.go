@@ -108,4 +108,6 @@ func main() {
 		res2.current = res2.current.next
 	}
 
+	fmt.Println("ends")
+
 }

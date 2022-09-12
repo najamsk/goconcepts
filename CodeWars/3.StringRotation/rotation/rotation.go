@@ -22,3 +22,15 @@ func StringLeftRotation(val string, d int) string {
 	val = left + right
 	return val
 }
+
+func StringLeftRotationMatch(x, y string) bool {
+	matched := false
+	left := y[:1]
+	right := y[1:]
+	xy := right + left
+	if xy == x {
+		return true
+	}
+
+	return matched
+}

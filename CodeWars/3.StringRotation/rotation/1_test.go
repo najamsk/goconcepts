@@ -73,3 +73,14 @@ func Test_RangeValues_StringRightRotation(t *testing.T) {
 	}
 
 }
+
+func Test_LeftRoationMatch_By1(t *testing.T){
+  x:= "ABCD"
+  y:= "DABC"
+
+  if got := rotation.StringLeftRotationMatch(x,y); got == false {
+				t.Errorf("expect %v, got = %v \n", true, got)
+
+  }
+
+}
