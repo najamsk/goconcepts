@@ -103,7 +103,7 @@ func (n *Node) BreadthFirst() {
 }
 
 func main() {
-	fmt.Println("hello")
+	//should work
 	t := &Node{key: 100}
 	t.Insert(203)
 	t.Insert(52)
