@@ -2,6 +2,20 @@ package main
 
 import "fmt"
 
+type Qeue struct {
+	items []*Node
+}
+
+func (q *Qeue) Push(k *Node) {
+	q.items = append(q.items, k)
+}
+
+func (q *Qeue) Pop() *Node {
+	k := q.items[0]
+	q.items = q.items[1:]
+	return k
+}
+
 type Node struct {
 	key   int
 	left  *Node
@@ -41,35 +55,55 @@ func (n *Node) Search(k int) bool {
 	return true
 }
 
-//Print_Preorder : value - left - right
-func (n *Node) Print_Preorder() {
+func (n *Node) DF_PreOrder() {
 	if n != nil {
 		fmt.Println(n.key)
-		n.left.Print_Preorder()
-		n.right.Print_Preorder()
+		n.left.DF_PreOrder()
+		n.right.DF_PreOrder()
 	}
 }
 
-//Print_Inorder : left - value - right
-func (n *Node) Print_Inorder() {
+func (n *Node) DF_InOrder() {
 	if n != nil {
-		n.left.Print_Preorder()
+		n.left.DF_PreOrder()
 		fmt.Println(n.key)
-		n.right.Print_Preorder()
+		n.right.DF_PreOrder()
 	}
+
 }
 
-//Print_Postorder : left - right - value
-func (n *Node) Print_Postorder() {
+func (n *Node) DF_PostOrder() {
 	if n != nil {
-		n.left.Print_Postorder()
-		n.right.Print_Postorder()
+		n.left.DF_PreOrder()
+		n.right.DF_PreOrder()
 		fmt.Println(n.key)
+	}
+
+}
+
+func (n *Node) BreadthFirst() {
+	//level order traversal
+	//1.take empty q and intial with root node
+	q := Qeue{}
+	q.Push(n)
+	//2. iterate over q until its not empty
+	for len(q.items) != 0 {
+		//a.pope item from Qeue
+		i := q.Pop()
+		//b.prints its value
+		fmt.Println(i)
+		//c. add its left and right child to Qeue
+		if i.left != nil {
+			q.Push(i.left)
+		}
+		if i.right != nil {
+			q.Push(i.right)
+		}
 	}
 }
 
 func main() {
-	fmt.Println("hello")
+	//should work
 	t := &Node{key: 100}
 	t.Insert(203)
 	t.Insert(52)
@@ -82,12 +116,14 @@ func main() {
 	t.Insert(7)
 	t.Insert(24)
 	t.Insert(88)
+
 	fmt.Printf("t.key=%d, t.left= %d, t.right=%d \n", t.key, t.left.key, t.right.key)
-	// fmt.Println(t.Search(600))
-	t.Print_Preorder()
-	fmt.Println("--------- PreOrder")
-	t.Print_Inorder()
-	fmt.Println("--------- InOrder")
-	t.Print_Postorder()
-	fmt.Println("--------- PostOrder")
+	t.BreadthFirst()
+	fmt.Println("$$$$$$$$$ DF ")
+	t.DF_PreOrder()
+	fmt.Println("--------- Pre ")
+	t.DF_InOrder()
+	fmt.Println("--------- Inorder ")
+	t.DF_PostOrder()
+	fmt.Println("--------- Post ")
 }
