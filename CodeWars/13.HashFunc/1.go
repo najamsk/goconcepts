@@ -148,7 +148,7 @@ func main() {
 	fmt.Println("vivi:", hash("vivi")) */
 	h := NewHashTable()
 	h.Insert("najam")
-	fmt.Println(h)
+
 	fmt.Println(h.array[1].head.key)
 
 }
