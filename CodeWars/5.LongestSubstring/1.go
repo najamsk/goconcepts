@@ -15,6 +15,7 @@ func LongestSub(s string) int {
 				count = len(m)
 			}
 			m = make(map[string]struct{})
+			m[string(c)] = struct{}{}
 			continue
 		}
 		m[string(c)] = struct{}{}
