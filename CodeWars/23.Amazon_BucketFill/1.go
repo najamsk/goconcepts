@@ -3,17 +3,27 @@ package main
 import "fmt"
 
 func test(canvas []string) {
-	for _, v := range canvas {
-		fmt.Println(v)
+	r := len(canvas)
+	c := len(canvas[0])
+	visited := make([][]bool, r)
+	mat := make([][]string, r)
+
+	for k := range visited {
+		visited[k] = make([]bool, c)
 	}
-	rows := len(canvas)
-	cols := len(canvas[0])
+	for k := range canvas {
+		mat[k] = make([]string, c)
+		for i, v := range canvas[k] {
+			mat[k][i] = string(v)
+		}
+	}
 
-	sr := rows / 2
-	sc := cols / 2
+	fmt.Println(r)
+	fmt.Println(c)
+	fmt.Printf("%v \n", mat[0])
+	fmt.Printf("%v \n", mat[1])
+	fmt.Printf("%v \n", mat[2])
 
-	fmt.Println(sr)
-	fmt.Println(sc)
 }
 
 func main() {

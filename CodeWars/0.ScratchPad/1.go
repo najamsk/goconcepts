@@ -1,19 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type Err string
+type err string
 
-func (e Err) Error() string {
+func (e err) Error() string {
 	return string(e)
 }
 
-const ErrNotFound = Err("My man, Item Not found")
+const ErrNotFound = err("My man, Item Not found")
+const ErrMyManNot = err("My man, wait up king kong you are not my man.")
 
 type Emp struct {
 	name string
 }
 
 func main() {
-	fmt.Println(ErrNotFound)
+	s := "hello my friend"
+	for _, v := range s {
+		fmt.Println(string(v))
+	}
+	fmt.Println(ErrMyManNot)
 }
