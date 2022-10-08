@@ -17,7 +17,6 @@ func (h *MaxHeap) Extract() int {
 	if len(h.array) == 0 {
 		return -1
 	}
-
 	last := len(h.array) - 1
 	extracted := h.array[0]
 	h.array[0] = h.array[last]
@@ -57,12 +56,10 @@ func (h *MaxHeap) maxHeapifyDown(index int) {
 }
 
 func (h *MaxHeap) maxHeapifyUp(index int) {
-
 	for h.array[parent(index)] < h.array[index] {
 		h.swap(parent(index), index)
 		index = parent(index)
 	}
-
 }
 
 func (h *MaxHeap) swap(i1, i2 int) {
