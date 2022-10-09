@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 type err string
@@ -20,7 +21,9 @@ type Emp struct {
 func main() {
 	s := "hello my friend"
 	for _, v := range s {
-		fmt.Println(string(v))
+		fmt.Printf("%v", string(v))
 	}
-	fmt.Println(ErrMyManNot)
+	fmt.Println("\n", ErrMyManNot)
+	bnums := strconv.FormatInt(6, 2)
+	fmt.Println(bnums)
 }
