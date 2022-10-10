@@ -13,10 +13,11 @@ func find(arr []int) int {
 		}
 	}
 	fmt.Println(m)
-	return 0
+	return -1
 }
 
 func main() {
 	fmt.Println(find([]int{3, 2, 3}))
 	fmt.Println(find([]int{2, 2, 1, 1, 1, 2, 2}))
+	fmt.Println(find([]int{3, 1, 2, 3}))
 }
