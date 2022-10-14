@@ -38,5 +38,6 @@ func threeSum(nums []int) [][]int {
 }
 
 func main() {
+	//https://leetcode.com/problems/3sum/
 	fmt.Println(threeSum([]int{-1, 0, 1, 2, -1, -4}))
 }
