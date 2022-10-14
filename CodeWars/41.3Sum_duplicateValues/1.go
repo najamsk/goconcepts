@@ -5,26 +5,26 @@ import (
 	"sort"
 )
 
-func threeSum(a []int, t int) []int {
-	res := []int{}
-	//sort input array
-	sort.Ints(a)
-	fmt.Println(a)
-	for k, v := range a {
-		if k > 0 && a[k-1] == v {
+func threeSum(nums []int) [][]int {
+	t := 0
+	res := [][]int{}
+	sort.Ints(nums)
+	for k, v := range nums {
+		if k > 0 && nums[k-1] == v {
 			continue
 		}
-		// fmt.Printf("%v", v)
 		l := k + 1
-		r := len(a) - 1
+		r := len(nums) - 1
 		for l < r {
-			if a[l] == v {
-				l++
-			}
-			sum := v + a[l] + a[r]
+			sum := v + nums[l] + nums[r]
 			if sum == t {
-				res = append(res, v, a[l], a[r])
-				return res
+				res = append(res, []int{v, nums[l], nums[r]})
+				l++
+				for l < r && nums[l] == nums[l-1] {
+					l++
+				}
+
+				// return res
 			} else if sum > t {
 				r--
 			} else {
@@ -38,5 +38,5 @@ func threeSum(a []int, t int) []int {
 }
 
 func main() {
-	fmt.Println(threeSum([]int{-3, 3, 4, -3, 1, 2}, 0))
+	fmt.Println(threeSum([]int{-1, 0, 1, 2, -1, -4}))
 }
