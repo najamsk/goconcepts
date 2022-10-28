@@ -22,7 +22,7 @@ func JsonStringHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func JsonStructHandler(w http.ResponseWriter, r *http.Request) {
-	data := SomeStruct{Name: "najam", Email: "najamsk"}
+	data := SomeStruct{Name: "najam", Email: "najamsk@gmail.com"}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(data)
