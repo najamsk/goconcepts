@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type SomeStruct struct {
@@ -13,6 +14,7 @@ type SomeStruct struct {
 }
 
 func StringHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("string handler invoked")
 	w.Write([]byte("Gorilla!\n"))
 }
 
@@ -40,10 +42,19 @@ func JsonMapHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func logHandler(next http.Handler) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println("logging middleware start")
+		next.ServeHTTP(w, r)
+		log.Println("logging middleware ends")
+	})
+}
+
 func main() {
 	r := mux.NewRouter()
 	// Routes consist of a path and a handler function.
-	r.HandleFunc("/", StringHandler)
+	sf := http.HandlerFunc(StringHandler)
+	r.HandleFunc("/", logHandler(sf))
 	r.HandleFunc("/jsonstring", JsonStringHandler)
 	r.HandleFunc("/struct", JsonStructHandler)
 	r.HandleFunc("/map", JsonMapHandler)
