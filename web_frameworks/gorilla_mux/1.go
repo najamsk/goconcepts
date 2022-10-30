@@ -60,6 +60,6 @@ func main() {
 	r.HandleFunc("/map", JsonMapHandler)
 
 	// Bind to a port and pass our router in
-	log.Println("server started at :8000")
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Println("server started at :5000")
+	log.Fatal(http.ListenAndServe(":5000", r))
 }
