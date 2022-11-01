@@ -12,8 +12,8 @@ func major(arr []int, k int) bool {
 		}
 		i++
 	}
-	fmt.Println(i, mid, mid+i)
-	if mid+i <= len(arr)-1 && arr[mid+i] == k {
+	// fmt.Println(i, mid, mid+i)
+	if mid+i < len(arr) && arr[mid+i] == k {
 		return true
 	}
 
