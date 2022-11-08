@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -11,6 +13,29 @@ import (
 type SomeStruct struct {
 	Name  string
 	Email string
+}
+
+func StreamHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("string handler invoked")
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		log.Println("responseWriter is not really a flusher")
+		return
+	}
+	//this header had no effect
+	w.Header().Set("Connection", "Keep-Alive")
+	//these two headers are needed to get the http chunk incremently
+	w.Header().Set("Transfer-Encoding", "chunked")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	for i := 0; i < 20; i++ {
+		// w.Write([]byte("Gorilla! \n"))
+		fmt.Println(i)
+		fmt.Fprintf(w, "Gorilla! %v \n", i)
+		flusher.Flush()
+		time.Sleep(1 * time.Second)
+		// time.Sleep(1 * time.Second)
+	}
+	fmt.Println("done")
 }
 
 func StringHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,8 +83,9 @@ func main() {
 	r.HandleFunc("/jsonstring", JsonStringHandler)
 	r.HandleFunc("/struct", JsonStructHandler)
 	r.HandleFunc("/map", JsonMapHandler)
+	r.HandleFunc("/stream", StreamHandler)
 
 	// Bind to a port and pass our router in
-	log.Println("server started at :5000")
-	log.Fatal(http.ListenAndServe(":5000", r))
+	log.Println("server started at :8000")
+	log.Fatal(http.ListenAndServe(":8000", r))
 }
