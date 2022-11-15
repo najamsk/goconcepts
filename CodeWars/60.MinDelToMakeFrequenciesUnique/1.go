@@ -2,35 +2,36 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"sort"
 )
 
 func test(s string) int {
-	m := make(map[string]int, len(s))
-	l := 0
 
-	for _, v := range s {
-		f := m[string(v)] + 1
-		l = int(math.Max(float64(f), float64(l)))
-		m[string(v)] = f
+	frequency, res := make([]int, 26), 0
+	for i := 0; i < len(s); i++ {
+		frequency[s[i]-'a']++
 	}
-
-	// fmt.Println(m)
-	// fmt.Println(l)
-	dels := 0
-	for _, v := range m {
-		if v > l {
-			dels++
+	is := sort.IntSlice(frequency)
+	sr := sort.Reverse(is)
+	sort.Sort(sr)
+	// sort.Sort(sort.Reverse(sort.IntSlice(frequency)))
+	for i := 1; i <= 25; i++ {
+		if frequency[i] == frequency[i-1] && frequency[i] != 0 {
+			res++
+			frequency[i]--
+			i--
+			sort.Sort(sort.Reverse(sort.IntSlice(frequency)))
 		}
-		l--
 	}
+	return res
 
-	return dels
 }
 
 func main() {
-	fmt.Println(test("aabbbcca"))
-	fmt.Println(test("aab"))
+	// fmt.Println(test("aabbbcca"))
+	// fmt.Println(test("aab"))
+
 	fmt.Println(test("ceabaacb"))
+	// fmt.Println(test("abcabc"))
 
 }
