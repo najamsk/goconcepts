@@ -31,4 +31,6 @@ func test(s string) int {
 func main() {
 	fmt.Println(test("aabbbcca"))
 	fmt.Println(test("aab"))
+	fmt.Println(test("ceabaacb"))
+
 }
