@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	mydata "gorilla/internal/data"
+	"gorilla/internal/mystore"
 	"log"
 	"net/http"
 	"time"
@@ -55,6 +57,22 @@ func JsonStructHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 
+func MembersHandler(w http.ResponseWriter, r *http.Request) {
+	repo := mystore.NewRepo()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(repo.GetMembers())
+}
+
+func TeamsHandler(w http.ResponseWriter, r *http.Request) {
+	// repo := mystore.NewRepo()
+	repo := mydata.NewRepo()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(repo.GetTeams())
+}
+
 func JsonMapHandler(w http.ResponseWriter, r *http.Request) {
 	resp := make(map[string]string)
 	resp["message"] = "Status Created"
@@ -84,6 +102,8 @@ func main() {
 	r.HandleFunc("/struct", JsonStructHandler)
 	r.HandleFunc("/map", JsonMapHandler)
 	r.HandleFunc("/stream", StreamHandler)
+	r.HandleFunc("/teams", TeamsHandler)
+	r.HandleFunc("/members", MembersHandler)
 
 	// Bind to a port and pass our router in
 	log.Println("server started at :8000")
