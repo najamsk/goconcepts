@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	mydata "gorilla/internal/data"
-	"gorilla/internal/mystore"
 	"log"
 	"net/http"
 	"time"
@@ -58,7 +57,8 @@ func JsonStructHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func MembersHandler(w http.ResponseWriter, r *http.Request) {
-	repo := mystore.NewRepo()
+	// repo := mystore.NewRepo()
+	repo := mydata.NewRepo()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(repo.GetMembers())
