@@ -1,0 +1,127 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation for Sample API",
+    "title": "My Sample API New",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/members": {
+      "get": {
+        "description": "Return a list of memebers from the database",
+        "tags": [
+          "members"
+        ],
+        "operationId": "listMembers",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/membersResponse"
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "description": "Return a list of teams from the database",
+        "tags": [
+          "teams"
+        ],
+        "operationId": "listTeams",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/teamsResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DMember": {
+      "description": "Member defines the structure for an API product\nDMember request model",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "id": {
+          "description": "the id for the product",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1,
+          "x-go-name": "Id"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "teamID": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "TeamId"
+        }
+      },
+      "x-go-package": "gorilla"
+    },
+    "DTeam": {
+      "description": "Team defines the structure for an API product\nDTeam request model",
+      "type": "object",
+      "required": [
+        "name",
+        "leader"
+      ],
+      "properties": {
+        "id": {
+          "description": "the id for the product",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1,
+          "x-go-name": "Id"
+        },
+        "leader": {
+          "$ref": "#/definitions/DMember"
+        },
+        "name": {
+          "description": "the name for this team",
+          "type": "string",
+          "maxLength": 255,
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "gorilla"
+    }
+  },
+  "responses": {
+    "membersResponse": {
+      "description": "A list of members",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/DMember"
+        }
+      }
+    },
+    "teamsResponse": {
+      "description": "A list of teams",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/DTeam"
+        }
+      }
+    }
+  }
+}

@@ -57,7 +57,11 @@ func JsonStructHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func MembersHandler(w http.ResponseWriter, r *http.Request) {
-	// repo := mystore.NewRepo()
+	// swagger:route GET /members members listMembers
+	// Return a list of memebers from the database
+	// responses:
+	//	200: membersResponse
+
 	repo := mydata.NewRepo()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -65,12 +69,35 @@ func MembersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TeamsHandler(w http.ResponseWriter, r *http.Request) {
+	// swagger:route GET /teams teams listTeams
+	// Return a list of teams from the database
+	// responses:
+	//	200: teamsResponse
+
 	// repo := mystore.NewRepo()
 	repo := mydata.NewRepo()
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(repo.GetTeams())
+}
+
+func NewMemberHandler(w http.ResponseWriter, r *http.Request) {
+	var newTeam mydata.Team
+	rb := json.NewDecoder(r.Body)
+	err := rb.Decode(&newTeam)
+	if err != nil {
+		log.Println("cant parse incoming data for member")
+		// w.WriteHeader(http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	log.Println("New member handler invoked")
+	repo := mydata.NewRepo()
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(repo.GetMembers())
 }
 
 func JsonMapHandler(w http.ResponseWriter, r *http.Request) {
@@ -96,8 +123,11 @@ func logHandler(next http.Handler) http.HandlerFunc {
 func main() {
 	r := mux.NewRouter()
 	// Routes consist of a path and a handler function.
+	fs := http.FileServer(http.Dir("./swaggerui/"))
+	r.PathPrefix("/swaggerui/").Handler(http.StripPrefix("/swaggerui/", fs))
 	sf := http.HandlerFunc(StringHandler)
-	r.HandleFunc("/", logHandler(sf))
+	r.HandleFunc("/", logHandler(sf)).Methods("GET")
+	r.HandleFunc("/member", NewMemberHandler).Methods("POST")
 	r.HandleFunc("/jsonstring", JsonStringHandler)
 	r.HandleFunc("/struct", JsonStructHandler)
 	r.HandleFunc("/map", JsonMapHandler)

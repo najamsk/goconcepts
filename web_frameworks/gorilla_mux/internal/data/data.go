@@ -22,17 +22,38 @@ func NewRepo() *Repo {
 	return &Repo{teams: teams, members: members}
 }
 
+// Member defines the structure for an API product
+// swagger: model
 type Member struct {
-	Id     int
-	Name   string
-	Email  string
-	teamId int
+	// the id for the product
+	//
+	// required: false
+	// min: 1
+	Id int `json:"id"`
+
+	// the name for this member
+	//
+	// required: true
+	// max length: 255
+	Name string `json:"name"`
+
+	// the email for this member
+	//
+	// required: true
+	// max length: 255
+	Email string `json:"email"`
+
+	// the teamid for this member
+	//
+	// required: true
+	TeamId int `json:"teamID"`
 }
 
+// Team defines the structure for an API product
 type Team struct {
-	Id     int
-	Name   string
-	Leader *Member
+	Id     int     `json:"id"`
+	Name   string  `json:"name"`
+	Leader *Member `json:"leader"`
 }
 
 func (r *Repo) GetTeams() []Team {
@@ -40,6 +61,7 @@ func (r *Repo) GetTeams() []Team {
 }
 
 func (r *Repo) GetMembers() []Member {
+	fmt.Println("data.members:", r.members)
 	return r.members
 }
 

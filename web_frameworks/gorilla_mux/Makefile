@@ -28,3 +28,23 @@ gauth:
 gpush:
 	docker image push  gcr.io/kubes-369319/${glat}
 	docker image push  gcr.io/kubes-369319/${gver}
+
+
+
+.DEFAULT_GOAL := swagger
+
+install_swagger:
+	go get -u github.com/go-swagger/go-swagger/cmd/swagger
+
+swagger:
+	@echo Ensure you have the swagger CLI or this command will fail.
+	@echo You can install the swagger CLI with: go get -u github.com/go-swagger/go-swagger/cmd/swagger
+	@echo ....
+
+	~/go/bin/swagger generate spec -o ./swagger.json --scan-models
+	cp swagger.json swaggerui
+
+
+swaggery:
+	swagger generate spec -o ./swagger.yaml --scan-models
+	cp swagger.json swaggerui
