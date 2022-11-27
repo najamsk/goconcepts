@@ -46,22 +46,17 @@
     }
   },
   "definitions": {
-    "DMember": {
-      "description": "Member defines the structure for an API product\nDMember request model",
+    "Member": {
+      "description": "Member defines the structure for an API product",
       "type": "object",
-      "required": [
-        "id"
-      ],
       "properties": {
         "email": {
           "type": "string",
           "x-go-name": "Email"
         },
         "id": {
-          "description": "the id for the product",
           "type": "integer",
           "format": "int64",
-          "minimum": 1,
           "x-go-name": "Id"
         },
         "name": {
@@ -74,34 +69,26 @@
           "x-go-name": "TeamId"
         }
       },
-      "x-go-package": "gorilla"
+      "x-go-package": "gorilla/internal/data"
     },
-    "DTeam": {
-      "description": "Team defines the structure for an API product\nDTeam request model",
+    "Team": {
+      "description": "Team defines the structure for an API product",
       "type": "object",
-      "required": [
-        "name",
-        "leader"
-      ],
       "properties": {
         "id": {
-          "description": "the id for the product",
           "type": "integer",
           "format": "int64",
-          "minimum": 1,
           "x-go-name": "Id"
         },
         "leader": {
-          "$ref": "#/definitions/DMember"
+          "$ref": "#/definitions/Member"
         },
         "name": {
-          "description": "the name for this team",
           "type": "string",
-          "maxLength": 255,
           "x-go-name": "Name"
         }
       },
-      "x-go-package": "gorilla"
+      "x-go-package": "gorilla/internal/data"
     }
   },
   "responses": {
@@ -110,7 +97,7 @@
       "schema": {
         "type": "array",
         "items": {
-          "$ref": "#/definitions/DMember"
+          "$ref": "#/definitions/Member"
         }
       }
     },
@@ -119,7 +106,7 @@
       "schema": {
         "type": "array",
         "items": {
-          "$ref": "#/definitions/DTeam"
+          "$ref": "#/definitions/Team"
         }
       }
     }

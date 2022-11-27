@@ -15,46 +15,14 @@
 // swagger:meta
 package main
 
-// Member defines the structure for an API product
-// DMember request model
-type DMember struct {
-	// the id for the product
-	//
-	// required: true
-	// min: 1
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Email  string `json:"email"`
-	TeamId int    `json:"teamID"`
-}
-
-// Team defines the structure for an API product
-// DTeam request model
-type DTeam struct {
-	// the id for the product
-	//
-	// required: false
-	// min: 1
-	Id int `json:"id"`
-
-	// the name for this team
-	//
-	// required: true
-	// max length: 255
-	Name string `json:"name"`
-
-	// the leader for this team
-	//
-	// required: true
-	Leader *DMember `json:"leader"`
-}
+import "gorilla/internal/data"
 
 // A list of teams
 // swagger:response teamsResponse
 type teamsResponseWrapper struct {
 	// All current teams
 	// in: body
-	Body []DTeam
+	Body []data.Team
 }
 
 // A list of members
@@ -62,5 +30,5 @@ type teamsResponseWrapper struct {
 type membersResponseWrapper struct {
 	// All current members
 	// in: body
-	Body []DMember
+	Body []data.Member
 }

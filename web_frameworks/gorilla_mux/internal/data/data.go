@@ -23,30 +23,11 @@ func NewRepo() *Repo {
 }
 
 // Member defines the structure for an API product
-// swagger: model
 type Member struct {
-	// the id for the product
-	//
-	// required: false
-	// min: 1
-	Id int `json:"id"`
-
-	// the name for this member
-	//
-	// required: true
-	// max length: 255
-	Name string `json:"name"`
-
-	// the email for this member
-	//
-	// required: true
-	// max length: 255
-	Email string `json:"email"`
-
-	// the teamid for this member
-	//
-	// required: true
-	TeamId int `json:"teamID"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	TeamId int    `json:"teamID"`
 }
 
 // Team defines the structure for an API product
