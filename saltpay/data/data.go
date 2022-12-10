@@ -2,6 +2,8 @@ package data
 
 import (
 	"encoding/json"
+	"flag"
+	"fmt"
 	"io/ioutil"
 )
 
@@ -15,8 +17,8 @@ type Repo struct {
 	People []Person
 }
 
-func NewRepo(filepath string) (*Repo, error) {
-	p, err := setupData(filepath)
+func NewRepo() (*Repo, error) {
+	p, err := setupData()
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +30,9 @@ func (r *Repo) GetAll() []Person {
 	return r.People
 }
 
-func setupData(filepath string) ([]Person, error) {
+func setupData() ([]Person, error) {
+	filepath := parseFileFlag()
+
 	people := []Person{}
 	data, err := ioutil.ReadFile(filepath)
 	if err != nil {
@@ -52,4 +56,15 @@ func setupData(filepath string) ([]Person, error) {
 		people = append(people, p)
 	}
 	return people, nil
+}
+
+func parseFileFlag() string {
+	iFile := flag.String("file", "data2.json", "provide file to read")
+	flag.Parse()
+	// if *iFile == "" {
+	// 	fmt.Println("no file provided to read from")
+	// 	return ""
+	// }
+	fmt.Printf("will read file: %s \n", *iFile)
+	return *iFile
 }
