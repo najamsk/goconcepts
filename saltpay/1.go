@@ -18,8 +18,12 @@ func main() {
 	}
 	srv := service.NewBirthday(repo)
 
-	res := srv.ListAll()
-	for _, v := range res {
-		fmt.Printf("person : %#v \n", v)
+	// res := srv.ListAll()
+	// for _, v := range res {
+	// 	fmt.Printf("person : %#v \n", v)
+	// }
+	resB := srv.ListTodayBirthdays()
+	for _, v := range resB {
+		fmt.Printf("birthday : %#v \n", v)
 	}
 }
