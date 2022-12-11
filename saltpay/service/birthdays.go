@@ -29,6 +29,49 @@ func (s *Birthdays) ListAll() []data.Person {
 	return s.repo.GetAll()
 }
 
+func (s *Birthdays) ListBirthdays(forDate Dob) []data.Person {
+	fmt.Println("list people with birthdays from service")
+	party := []data.Person{}
+	// tDob := todayDobFormat()
+	p := s.repo.GetAll()
+
+	for _, v := range p {
+		chk := isYourBirthdayForDate(v, forDate)
+		if chk {
+			party = append(party, v)
+		}
+		// fmt.Printf("name: %s, birthday:%#v \n", v.FirstName, birthdayDobFormat(v.Birthday))
+	}
+	return party
+}
+
+func isYourBirthdayForDate(p data.Person, forDate Dob) bool {
+	//if person year is leap and having feb as a month and date 29
+	//	then check if today year is also leap
+	//	else normal checking of month and date
+	pDob := birthdayDobFormat(p.Birthday)
+	tDob := forDate
+
+	// fmt.Printf("checking:%v, dob: %#v \n", p, pDob)
+
+	if pDob.IsLeap && pDob.Month == 2 && pDob.Day == 29 {
+		//match with today is leapYear
+		if tDob.Day == 29 && tDob.Month == 2 && tDob.IsLeap {
+			//if tody is 29 feb due to leap year
+			return true
+		} else if tDob.Day == 28 && tDob.Month == 2 && !tDob.IsLeap {
+			//if tody is 28 feb due not leap year
+			return true
+		} else {
+			return false
+		}
+	} else if pDob.Month == tDob.Month && pDob.Day == tDob.Day {
+		return true
+	}
+
+	return false
+}
+
 func (s *Birthdays) ListTodayBirthdays() []data.Person {
 	fmt.Println("list people with birthdays from service")
 	party := []data.Person{}

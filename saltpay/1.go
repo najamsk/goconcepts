@@ -22,7 +22,10 @@ func main() {
 	// for _, v := range res {
 	// 	fmt.Printf("person : %#v \n", v)
 	// }
-	resB := srv.ListTodayBirthdays()
+
+	// resB := srv.ListTodayBirthdays()
+	fDate := service.Dob{Year: 2021, Month: 12, Day: 10}
+	resB := srv.ListBirthdays(fDate)
 	for _, v := range resB {
 		fmt.Printf("birthday : %#v \n", v)
 	}
