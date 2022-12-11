@@ -13,8 +13,7 @@ func main() {
 	// fileName := parseFileFlag()
 	repo, err := data.NewRepo()
 	if err != nil {
-		log.Printf("Cant create repo because of error: %v \n", err)
-		return
+		log.Fatalf("Cant create repo because of error: %v \n", err)
 	}
 	srv := service.NewBirthday(repo)
 
