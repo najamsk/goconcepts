@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"log"
 	"salty/data"
 	"strconv"
 	"strings"
@@ -45,7 +46,11 @@ func isYourBirthdayForDate(p data.Person, forDate Dob) bool {
 	//if person year is leap and having feb as a month and date 29
 	//	then check if today year is also leap
 	//	else normal checking of month and date
-	pDob := birthdayDobFormat(p.Birthday)
+	pDob, err := birthdayDobFormat(p.Birthday)
+	if err != nil {
+		log.Printf("error parsing %s %s birthday", p.FirstName, p.LastName)
+		return false
+	}
 	tDob := forDate
 
 	// fmt.Printf("checking:%v, dob: %#v \n", p, pDob)
@@ -86,12 +91,21 @@ type Dob struct {
 	IsLeap bool
 }
 
-func birthdayDobFormat(d string) Dob {
+func birthdayDobFormat(d string) (Dob, error) {
 	dd := strings.Split(d, "/")
-	yy, _ := strconv.Atoi(dd[0])
-	days, _ := strconv.Atoi(dd[2])
-	mm, _ := strconv.Atoi(dd[1])
+	yy, err := strconv.Atoi(dd[0])
+	if err != nil {
+		return Dob{}, err
+	}
+	days, err := strconv.Atoi(dd[2])
+	if err != nil {
+		return Dob{}, err
+	}
+	mm, err := strconv.Atoi(dd[1])
+	if err != nil {
+		return Dob{}, err
+	}
 
 	dob := Dob{Year: yy, Month: mm, Day: days, IsLeap: IsLeapYear(yy)}
-	return dob
+	return dob, nil
 }
