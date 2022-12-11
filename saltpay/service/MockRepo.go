@@ -1,4 +1,4 @@
-package data
+package service
 
 type MockRepo struct {
 	People []Person

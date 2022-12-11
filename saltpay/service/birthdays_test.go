@@ -3,13 +3,12 @@ package service
 import (
 	"fmt"
 	"reflect"
-	"salty/data"
 	"testing"
 )
 
 func TestGetAll(t *testing.T) {
 	//arrange
-	r := data.NewRepoMock()
+	r := NewRepoMock()
 
 	//act
 	p := r.GetAll()
@@ -22,31 +21,31 @@ func TestGetAll(t *testing.T) {
 
 func TestListBirthDays(t *testing.T) {
 	//arrange
-	r := data.NewRepoMock()
+	r := NewRepoMock()
 	s := NewBirthday(r)
 
 	type TestCase struct {
 		description string
 		input       Dob
-		want        []data.Person
+		want        []Person
 	}
 
 	// People12Dec := []data.Person{
 	// 	{FirstName: "Eddie", LastName: "Tubbs", Birthday: "2021/12/11"},
 	// }
 
-	PeopleEmpty := []data.Person{}
+	PeopleEmpty := []Person{}
 
-	People28FebWithNormalYear := []data.Person{
+	People28FebWithNormalYear := []Person{
 		{FirstName: "Mark", LastName: "Curry", Birthday: "1988/02/29"},
 		{FirstName: "Silly", LastName: "Goose", Birthday: "1996/02/29"},
 		{FirstName: "Salma", LastName: "Riz", Birthday: "2020/02/28"},
 	}
-	People29Feb := []data.Person{
+	People29Feb := []Person{
 		{FirstName: "Mark", LastName: "Curry", Birthday: "1988/02/29"},
 		{FirstName: "Silly", LastName: "Goose", Birthday: "1996/02/29"},
 	}
-	People28FebWithLeapYear := []data.Person{
+	People28FebWithLeapYear := []Person{
 		{FirstName: "Salma", LastName: "Riz", Birthday: "2020/02/28"},
 	}
 	// NonLeapYear29Feb := []data.Person{}
@@ -107,4 +106,43 @@ func TestLeapYearTable(t *testing.T) {
 		})
 
 	}
+}
+
+func TestBirthayStringToDobFormat(t *testing.T) {
+	tcs := []struct {
+		description string
+		input       string
+		want        error
+	}{
+		{"empty dob string", "", ErrParsingDate},
+		{"jibberish string", "adfasdf", ErrParsingDate},
+		// {"2022/12/11", "2022/12/11", nil, Dob{Year: 2022, Day: 11, Month: 12}},
+	}
+
+	for _, tc := range tcs {
+		t.Run(tc.description, func(t *testing.T) {
+			_, got := birthdayDobFormat(tc.input)
+			if got != tc.want {
+				t.Errorf("input:%v, want:%v, got:%v \n", tc.input, tc.want, got)
+			}
+		})
+	}
+
+	tcsP := []struct {
+		description string
+		input       string
+		want        Dob
+	}{
+		{"valid date as string", "2022/12/11", Dob{Year: 2022, Day: 11, Month: 12}},
+	}
+
+	for _, tc := range tcsP {
+		t.Run(tc.description, func(t *testing.T) {
+			got, _ := birthdayDobFormat(tc.input)
+			if got != tc.want {
+				t.Errorf("input:%v, want:%v, got:%v \n", tc.input, tc.want, got)
+			}
+		})
+	}
+
 }
