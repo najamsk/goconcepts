@@ -14,6 +14,7 @@ func NewRepoMock() *MockRepo {
 			// {FirstName: "Mark", LastName: "Cuban", Birthday: "2021/02/28"},
 			{FirstName: "Silly", LastName: "Goose", Birthday: "1996/02/29"},
 			{FirstName: "Salma", LastName: "Riz", Birthday: "2020/02/28"},
+			{FirstName: "Khali", LastName: "Great", Birthday: ""},
 			// {FirstName: "Eddie", LastName: "Tubbs", Birthday: "2021/12/11"},
 		},
 	}
