@@ -9,12 +9,20 @@ import (
 )
 
 type Birthdays struct {
-	repo *data.Repo
+	repo IRepo
 }
 
-func NewBirthday(repo *data.Repo) *Birthdays {
+type IRepo interface {
+	GetAll() []data.Person
+}
+
+func NewBirthday(repo IRepo) *Birthdays {
 	return &Birthdays{repo: repo}
 }
+
+// func NewBirthday(repo *data.Repo) *Birthdays {
+// 	return &Birthdays{repo: repo}
+// }
 
 func (s *Birthdays) ListAll() []data.Person {
 	fmt.Println("list people from service")

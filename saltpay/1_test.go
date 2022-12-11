@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"salty/data"
 	"salty/service"
-	"strings"
 	"testing"
 	"time"
 )
@@ -25,39 +23,7 @@ func TestReadingFromJsonFile(t *testing.T) {
 	// fmt.Println("test pass")
 }
 
-func translateDateFormat(d string) string {
-	return strings.ReplaceAll(d, "/", "-")
-}
-func TestTranslateDateFormat(t *testing.T) {
-	// fmt.Println("test pass")
-	i := "1986/03/28"
-	expected := "1986-03-28"
-	got := translateDateFormat(i)
-	// currentTime := time.Now()
-	// cf := currentTime.Format("2006-02-01")
-
-	// fmt.Println("MM-DD-YYYY : ", cf)
-	if got != expected {
-		t.Errorf("date format change failed expected:%s, got:%s \n", expected, got)
-	}
-
-}
-
-type Dob struct {
-	Day    int
-	Month  string
-	Year   int
-	IsLeap bool
-}
-
 func IsLeapYear(y int) bool {
-
-	//Thirty days hath September,
-	//April, June and November;
-	//February has twenty eight alone
-	//All the rest have thirty-one
-	//Except in Leap Year, that's the time
-	//When February's Days are twenty-nine
 
 	// convert int to Time - use the last day of the year, which is 31st December
 	year := time.Date(y, time.December, 31, 0, 0, 0, 0, time.Local)
@@ -69,47 +35,29 @@ func IsLeapYear(y int) bool {
 		return false
 	}
 }
-
-func returnTodayInDobFormat() Dob {
-	currentTime := time.Now()
-	d := Dob{
-		Day:    currentTime.Day(),
-		Month:  currentTime.Month().String(),
-		Year:   currentTime.Year(),
-		IsLeap: IsLeapYear(currentTime.Year()),
-	}
-	return d
-}
-func TestTodayDateComponnents(t *testing.T) {
-
-	currentTime := time.Now()
-	// cf := currentTime.Format("2006-02-01")
-	expected := Dob{
-		Day:    currentTime.Day(),
-		Month:  currentTime.Month().String(),
-		Year:   currentTime.Year(),
-		IsLeap: IsLeapYear(currentTime.Year()),
-	}
-	got := returnTodayInDobFormat()
-	fmt.Printf("got:%v \n", got)
-	fmt.Printf("expected:%v \n", expected)
-	if got != expected {
-		t.Errorf("date format change failed expected:%v, got:%v \n", expected, got)
-	}
-}
-
-func TestLeapYears(t *testing.T) {
-	if IsLeapYear(1998) == true {
-		t.Errorf("failed with year:%v \n", 1998)
-	}
-	if IsLeapYear(1997) == true {
-		t.Errorf("failed with year:%v \n", 1997)
-	}
-	if IsLeapYear(1995) == true {
-		t.Errorf("failed with year:%v \n", 1995)
-	}
-	if IsLeapYear(1996) == false {
-		t.Errorf("failed with year:%v \n", 1995)
+func TestLeapYearTable(t *testing.T) {
+	tcs := []struct {
+		description string
+		input       int
+		want        bool
+	}{
+		{"2024 is leap year", 2024, true},
+		{"2000 is leap year", 2000, true},
+		{"2004 is leap year", 2004, true},
+		{"1996 is leap year", 1996, true},
+		{"2022 is not leap year", 2022, false},
+		{"1995 is not leap year", 1995, false},
+		{"1997 is not leap year", 1997, false},
+		{"1998 is not leap year", 1998, false},
 	}
 
+	for _, tc := range tcs {
+		t.Run(tc.description, func(t *testing.T) {
+			got := IsLeapYear(tc.input)
+			if got != tc.want {
+				t.Errorf("failed with year:%v, want:%v, got:%v \n", tc.input, tc.want, got)
+			}
+		})
+
+	}
 }
