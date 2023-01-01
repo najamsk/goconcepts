@@ -26,7 +26,7 @@ func main() {
 	client := userpb.NewUserServiceClient(conn)
 
 	res, err := client.GetUser(context.Background(), &userpb.GetUserRequest{
-		Uuid: "1-2-3",
+		Uuid: "1-2-3-4-5-6",
 	})
 	if err != nil {
 		log.Fatalf("fail to GetUser: %v", err)
