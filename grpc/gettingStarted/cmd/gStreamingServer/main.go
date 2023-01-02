@@ -7,6 +7,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	wearablepb.RegisterWearableServiceServer(grpcServer, &wearableService{})
+	reflection.Register(grpcServer)
 	// userpb.RegisterUserServiceServer(grpcServer, &userService{})
 	grpcServer.Serve(lis)
 }
