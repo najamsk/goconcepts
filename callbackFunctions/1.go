@@ -24,7 +24,6 @@ func StartTimer(name string) func() {
 		d := time.Since(t)
 		log.Println(name, "took", d)
 	}
-
 }
 
 func funcyFunction() {
