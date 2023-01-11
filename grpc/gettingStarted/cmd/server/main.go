@@ -15,10 +15,15 @@ type userService struct {
 }
 
 func (us *userService) GetUser(ctx context.Context, req *userpb.GetUserRequest) (*userpb.GetUserResponse, error) {
+	log.Println("married:", userpb.MaritalStatus_MARITAL_STATUS_MARRIED)
 	return &userpb.GetUserResponse{
 		User: &userpb.User{
-			Uuid:     req.Uuid,
-			FullName: "Najam Awan",
+			Uuid:          req.Uuid,
+			FullName:      "Najam Awan",
+			BirthYear:     1900,
+			Salary:        4000,
+			MaritalStatus: userpb.MaritalStatus_MARITAL_STATUS_MARRIED,
+			// MaritalStatus:
 		},
 	}, nil
 }

@@ -32,5 +32,9 @@ func main() {
 		log.Fatalf("fail to GetUser: %v", err)
 	}
 
-	fmt.Printf("%+v\n", res)
+	fmt.Printf("user:%+v\n", res.User)
+	fmt.Println("---------------------")
+	fmt.Printf("Fullname:%v\n", res.User.FullName)
+	fmt.Printf("Salary:%v\n", res.User.Salary)
+	fmt.Printf("Status:%v\n", res.User.MaritalStatus)
 }
