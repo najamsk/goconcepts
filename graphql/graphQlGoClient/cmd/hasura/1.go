@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Println("hi")
 	client := graphql.NewClient("https://rickandmortyapi.com/graphql", nil)
 	var query struct {
 		Characters struct {
