@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hasura/go-graphql-client"
+	graphql "github.com/hasura/go-graphql-client"
 )
 
 func main() {
@@ -29,5 +29,7 @@ func main() {
 	fmt.Println(query.Characters.Info.Count)
 	fmt.Println(query.Characters.Results[0].Id)
 	fmt.Println(query.Characters.Results[0].Name)
-
+	fmt.Println("___________________________________")
+	fmt.Println(query.Characters.Results[1].Id)
+	fmt.Println(query.Characters.Results[1].Name)
 }
