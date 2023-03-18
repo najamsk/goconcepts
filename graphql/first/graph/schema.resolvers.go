@@ -8,6 +8,7 @@ import (
 	"example/graph/generated"
 	"example/graph/model"
 	"fmt"
+	"log"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
@@ -15,6 +16,8 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	user := ForContext(ctx)
+	log.Printf("user read from ctx is : %#v \n", user)
 	usr1 := &model.User{ID: "1", Name: "Najam Awan"}
 	usr2 := &model.User{ID: "2", Name: "Naeem Hassan"}
 	result := []*model.Todo{
